@@ -1,3 +1,4 @@
+import csv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
@@ -20,11 +21,11 @@ def login_to_instagram(driver, username, password):
 
 if __name__ == "__main__":
     # List of usernames and corresponding passwords
-    credentials_list = [
-        {'username': 'user1', 'password': 'pass1'},
-        {'username': 'trek_nerd_kutub', 'password': 'Killeriam@123'},
-        # Add more username/password combinations as needed
-    ]
+    credentials_list = []
+    with open('credentials.csv', 'r') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            credentials_list.append({'username': row['username'], 'password': row['password']})
 
     service = Service(executable_path="H:\khatranak\insta_scraping\Instagram-Scraping-Followers\chromedriver.exe")
     driver = webdriver.Chrome(service=service)
